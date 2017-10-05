@@ -43,8 +43,9 @@ namespace ForForeachTest
             {
                 for (int j = 0; j < arr.Length; j++)
                 {
-                    sum += arr[j];
-                    sum1 += arr[j] * arr[j];
+                    var value = arr[j];
+                    sum += value;
+                    sum1 += value * value;
                 }
             });
 
@@ -61,8 +62,9 @@ namespace ForForeachTest
             {
                 for (int j = 0; j < list.Count; j++)
                 {
-                    sum += list[j];
-                    sum1 += list[j] * list[j];
+                    var value = arr[j];
+                    sum += value;
+                    sum1 += value * value;
                 }
             });
 
