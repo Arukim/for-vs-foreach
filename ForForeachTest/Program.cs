@@ -10,6 +10,7 @@ namespace ForForeachTest
     {
         const int Size = 10000;
         const int Iterations = 100000;
+        const int WarmUpIterations = 10000;
 
 
 
@@ -28,16 +29,32 @@ namespace ForForeachTest
             Action<string, Action> runTest = (str, func) =>
             {
                 sum = 0; sum1 = 0;
+                // warm up
+                for (var i = 0; i < WarmUpIterations; i++)
+                {
+                    func();
+                }
+
+                sum = 0; sum1 = 0;
                 sw = Stopwatch.StartNew();
                 for (int i = 0; i < Iterations; i++)
                 {
                     func();
                 }
                 sw.Stop();
-                Console.WriteLine($"Resuls: {sum} {sum1}");
+                Console.WriteLine($"Results: {sum} {sum1}");
                 Console.WriteLine(str, sw.ElapsedMilliseconds);
-                GC.Collect();
+               // GC.Collect();
             };
+
+            runTest("warm up {0}", () =>
+            {
+                for (int j = 0; j < arr.Length; j++)
+                {
+                    sum += arr[j];
+                    sum1 += arr[j] * arr[j];
+                }
+            });
 
             runTest("ARR For loop: {0}", () =>
             {
@@ -73,7 +90,7 @@ namespace ForForeachTest
                     sum += d;
                     sum1 += d * d;
                 }
-            });            
+            });
         }
     }
 }
